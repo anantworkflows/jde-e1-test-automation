@@ -1,6 +1,10 @@
-# Test Automation Pipeline
+# JDE E1 Test Automation
 
-Multi-agent system for end-to-end test automation.
+[![Tests](https://github.com/anantworkflows/jde-e1-test-automation/actions/workflows/test.yml/badge.svg)](https://github.com/anantworkflows/jde-e1-test-automation/actions)
+
+Multi-agent system for JD Edwards EnterpriseOne end-to-end test automation.
+
+**Repository:** https://github.com/anantworkflows/jde-e1-test-automation
 
 ## Architecture
 
