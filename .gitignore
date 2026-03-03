@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Test results
+test-results/
+pipeline/runs/
+*.log
+
+# Environment variables
+.env
+
+# Playwright
+.trace/
+.playwright-artifacts-*/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+/tmp/
+*.tmp

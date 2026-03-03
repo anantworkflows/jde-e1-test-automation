@@ -1,0 +1,21 @@
+{
+  "source": "JDE Backorder Processing Automation",
+  "type": "file",
+  "title": "Backorder Processing - Sales Order Management",
+  "description": "Automated test for processing backorders in JD Edwards E1 Sales Order Management module",
+  "acceptanceCriteria": [
+    "Given a user is logged into JDE E1, When they navigate to Backorder Release, Then the backorder inquiry form should be displayed",
+    "Given backorders exist in the system, When user searches by customer number, Then backorder lines should be displayed",
+    "Given backorder lines are displayed, When user selects items and releases them, Then status should change to Released",
+    "Given backorder is released, When inventory is checked, Then allocation should be updated for the items"
+  ],
+  "url": "https://demo.steltix.com/jde/E1Menu.maf",
+  "module": "Sales Order Management",
+  "menuPath": "Daily Order Processing → Backorder Release",
+  "formId": "P42117",
+  "testData": {
+    "customerNumber": "4242",
+    "itemNumber": "1001",
+    "branchPlant": "30"
+  }
+}

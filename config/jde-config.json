@@ -1,0 +1,9 @@
+{
+  "environment": "demo",
+  "base_url": "https://demo.steltix.com/jde/E1Menu.maf",
+  "credentials": {
+    "username": "demo",
+    "password": "demo"
+  },
+  "updated_at": "2026-03-02T20:32:00Z"
+}

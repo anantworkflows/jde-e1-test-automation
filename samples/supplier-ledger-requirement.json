@@ -1,0 +1,19 @@
+{
+  "source": "JDE Supplier Ledger Inquiry Automation",
+  "type": "file",
+  "title": "Supplier Ledger Inquiry - Accounts Payable",
+  "description": "Automated test for Supplier Ledger Inquiry in JD Edwards E1 Accounts Payable module",
+  "acceptanceCriteria": [
+    "Given a user is logged into JDE E1, When they search for Supplier Ledger Inquiry, Then the application P0411 should open",
+    "Given Supplier Ledger Inquiry is open, When user enters a supplier number, Then supplier records should be displayed",
+    "Given supplier records are displayed, When user applies filters, Then filtered results should show",
+    "Given filtered results, When user clicks on a record, Then detail view should open"
+  ],
+  "url": "https://demo.steltix.com/jde/E1Menu.maf",
+  "module": "Accounts Payable",
+  "menuPath": "Accounts Payable Manager → Supplier Ledger Inquiry",
+  "formId": "P0411",
+  "testData": {
+    "supplierNumber": "1001"
+  }
+}

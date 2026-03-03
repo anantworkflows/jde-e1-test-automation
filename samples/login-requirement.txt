@@ -1,0 +1,11 @@
+Feature: User Login
+As a user, I want to log in so I can access my dashboard.
+
+Acceptance Criteria:
+Given a registered user with email "user@example.com" and password "SecurePass123"
+When they enter valid credentials and click the login button
+Then they should be redirected to the dashboard
+
+Given a user enters invalid credentials
+When they click login
+Then they should see an error message "Invalid email or password"

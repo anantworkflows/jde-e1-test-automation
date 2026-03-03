@@ -1,0 +1,13 @@
+{
+  "runId": null,
+  "status": "idle",
+  "stages": {
+    "parse": {"status": "pending", "input": null, "output": null, "agent": null},
+    "generate": {"status": "pending", "input": null, "output": null, "agent": null},
+    "codegen": {"status": "pending", "input": null, "output": null, "agent": null},
+    "execute": {"status": "pending", "input": null, "output": null, "agent": null},
+    "report": {"status": "pending", "input": null, "output": null, "agent": null}
+  },
+  "createdAt": null,
+  "completedAt": null
+}

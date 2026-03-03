@@ -1,0 +1,12 @@
+{
+  "source": "https://demo.steltix.com/jde/E1Menu.maf",
+  "type": "url",
+  "title": "JD Edwards EnterpriseOne Demo Login",
+  "description": "Oracle JD Edwards EnterpriseOne demo environment for testing. URL contains campaign tracking parameters from Steltix marketing email.",
+  "acceptanceCriteria": [
+    "Given a user navigates to the JD Edwards demo URL, When the page loads, Then the login form should be displayed with username and password fields",
+    "Given valid demo credentials, When user submits login form, Then user should be redirected to E1Menu main application page",
+    "Given invalid credentials, When user submits login form, Then an error message should be displayed",
+    "Given the E1Menu page loads, When user views the navigation, Then the main menu items should be visible and accessible"
+  ]
+}

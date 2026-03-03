@@ -1,0 +1,38 @@
+{
+  "runId": "run-20260302-172723",
+  "status": "failed",
+  "stages": {
+    "parse": {
+      "status": "completed",
+      "input": "samples/jde-demo-requirement.json",
+      "output": "./agents/../pipeline/runs/run-20260302-172723/output.json",
+      "agent": "run-20260302-172723"
+    },
+    "generate": {
+      "status": "completed",
+      "input": null,
+      "output": "./agents/../pipeline/runs/run-20260302-172723/output.json",
+      "agent": "run-20260302-172723"
+    },
+    "codegen": {
+      "status": "completed",
+      "input": null,
+      "output": "./agents/../pipeline/runs/run-20260302-172723/output.json",
+      "agent": "run-20260302-172723"
+    },
+    "execute": {
+      "status": "failed",
+      "input": null,
+      "output": null,
+      "agent": "run-20260302-172723"
+    },
+    "report": {
+      "status": "failed",
+      "input": null,
+      "output": null,
+      "agent": "run-20260302-172723"
+    }
+  },
+  "createdAt": 1772490443.417936,
+  "completedAt": 1772490444.556713
+}
