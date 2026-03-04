@@ -1,0 +1,137 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="[x:Null]" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>System.Net.Http</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>UiPath.Web</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>System.Net.Http</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="JDE Test Automation from Jira" sap:VirtualizedContainerService.HintSize="800,1200" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="JiraBaseUrl" Default="https://workflows.atlassian.net" />
+      <Variable x:TypeArguments="x:String" Name="GitHubRepoUrl" Default="https://github.com/anantworkflows/jde-e1-test-automation" />
+      <Variable x:TypeArguments="x:String" Name="TestResultsPath" />
+      <Variable x:TypeArguments="x:String" Name="TestOutput" />
+      <Variable x:TypeArguments="JObject" Name="TestResultsJson" />
+      <Variable x:TypeArguments="x:String" Name="CommentBody" />
+    </Sequence.Variables>
+    <sap:WorkflowViewState.IdRef>Sequence_1</sap:WorkflowViewState.IdRef>
+    
+    <!-- Step 1: Update Jira - In Progress -->
+    <ui:LogMessage DisplayName="Log Start" Level="Info" Message="[String.Format(&quot;Starting test automation for Jira issue: {0}&quot;, JiraIssueKey)]" />
+    
+    <ui:Comment DisplayName="Update Jira Status" Text="Update Jira issue status to 'In Progress' and add comment" />
+    
+    <!-- Step 2: Execute Playwright Tests -->
+    <ui:InvokePowerShell DisplayName="Run Playwright Tests" ContinueOnError="False" 
+      CommandText="cd ~/.openclaw/workspace/test-automation; npm test -- --reporter=json --output=test-results/jira-${JiraIssueKey}" 
+      IsScript="True" 
+      Output="[TestOutput]"
+      TimeoutMS="300000" />
+    
+    <ui:LogMessage DisplayName="Log Test Complete" Level="Info" Message="[String.Format(&quot;Test execution completed for {0}&quot;, JiraIssueKey)]" />
+    
+    <!-- Step 3: Parse Results -->
+    <ui:ReadTextFile DisplayName="Read Test Results" FileName="[String.Format(&quot;~/.openclaw/workspace/test-automation/test-results/jira-{0}/results.json&quot;, JiraIssueKey)]" Content="[TestResultsPath]" />
+    
+    <Assign DisplayName="Parse JSON">
+      <Assign.To>[TestResultsJson]</Assign.To>
+      <Assign.Value>[JObject.Parse(TestResultsPath)]</Assign.Value>
+    </Assign>
+    
+    <!-- Step 4: Prepare Jira Comment -->
+    <Assign DisplayName="Build Comment">
+      <Assign.To>[CommentBody]</Assign.To>
+      <Assign.Value>[String.Format(&quot;h3. Test Execution Results - {0}{1}{1}*Status:* Completed{1}*Total Tests:* {2}{1}*Passed:* {3}{1}*Failed:* {4}{1}{1}See attached screenshots and logs for details.&quot;, DateTime.Now.ToString(&quot;yyyy-MM-dd HH:mm&quot;), Environment.NewLine, TestResultsJson(&quot;stats&quot;)(&quot;tests&quot;), TestResultsJson(&quot;stats&quot;)(&quot;expected&quot;), TestResultsJson(&quot;stats&quot;)(&quot;unexpected&quot;))]</Assign.Value>
+    </Assign>
+    
+    <!-- Step 5: Update Jira with Results -->
+    <ui:Comment DisplayName="Post Results to Jira" Text="POST /rest/api/2/issue/{JiraIssueKey}/comment with CommentBody" />
+    
+    <!-- Step 6: Attach Screenshots -->
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="Attach Screenshots" Values="[Directory.GetFiles(String.Format(&quot;~/.openclaw/workspace/test-automation/test-results/jira-{0}&quot;, JiraIssueKey), &quot;*.png&quot;)]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="screenshot" />
+          </ActivityAction.Argument>
+          <ui:Comment DisplayName="Upload Attachment" Text="POST screenshot to Jira issue" />
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    
+    <!-- Step 7: Update Issue Status -->
+    <ui:If DisplayName="Check Test Status" Condition="[TestResultsJson(&quot;stats&quot;)(&quot;unexpected&quot;).ToObject(Of Integer)() = 0]">
+      <ui:If.Then>
+        <Sequence DisplayName="All Tests Passed">
+          <ui:Comment DisplayName="Transition to Done" Text="Transition Jira issue to Done/Closed status" />
+        </Sequence>
+      </ui:If.Then>
+      <ui:If.Else>
+        <Sequence DisplayName="Tests Failed">
+          <ui:Comment DisplayName="Transition to In Review" Text="Transition Jira issue to In Review or Failed status" />
+        </Sequence>
+      </ui:If.Else>
+    </ui:If>
+    
+    <ui:LogMessage DisplayName="Log Complete" Level="Info" Message="[String.Format(&quot;Test automation workflow completed for {0}&quot;, JiraIssueKey)]" />
+    
+  </Sequence>
+</Activity>

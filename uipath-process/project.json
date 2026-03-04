@@ -1,0 +1,77 @@
+{
+  "name": "JDE Test Automation Process",
+  "description": "End-to-end test automation triggered from Jira, executing Playwright tests and reporting results",
+  "version": "1.0.0",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.System.Activities": "[23.10.0]",
+    "UiPath.WebAPI.Activities": "[1.18.0]",
+    "UiPath.Jira.Activities": "[1.2.0]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "0.0.0.0",
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": false,
+    "supportsPersistence": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "modernBehavior": true
+  },
+  "expressionLanguage": "CSharp",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "main",
+      "input": [
+        {
+          "name": "JiraIssueKey",
+          "type": "System.String"
+        },
+        {
+          "name": "TestSuite",
+          "type": "System.String"
+        },
+        {
+          "name": "JiraToken",
+          "type": "System.String"
+        }
+      ],
+      "output": [
+        {
+          "name": "TestResults",
+          "type": "Newtonsoft.Json.Linq.JObject"
+        }
+      ]
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Windows"
+}

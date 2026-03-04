@@ -1,0 +1,83 @@
+{
+  "name": "Trigger Test Automation from Jira",
+  "description": "When an issue with label 'automated' is transitioned to In Progress, trigger UiPath test execution",
+  "authorAccountId": "anantworkflows",
+  "created": 1709500000000,
+  "updated": 1709500000000,
+  "trigger": {
+    "id": "issue-field-transitioned",
+    "component": "TRIGGER",
+    "schemaVersion": 1,
+    "type": "jira.issue.field.changed",
+    "value": {
+      "changeType": "CHANGED",
+      "fields": ["status"],
+      "fromStatus": ["To Do", "Open", "Backlog"],
+      "toStatus": ["In Progress"]
+    }
+  },
+  "components": [
+    {
+      "id": "condition-issue-field",
+      "component": "CONDITION",
+      "schemaVersion": 1,
+      "type": "jira.issue.condition.issue.field",
+      "value": {
+        "field": "labels",
+        "operator": "CONTAINS_ANY",
+        "value": ["automated", "xray", "test"]
+      }
+    },
+    {
+      "id": "action-send-web-request",
+      "component": "ACTION",
+      "schemaVersion": 1,
+      "type": "jira.webhook.request",
+      "value": {
+        "url": "https://cloud.uipath.com/ocr/organizations/automationworkflows/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{secrets.UIPATH_TOKEN}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "X-UIPATH-OrganizationUnitId",
+            "value": "1"
+          }
+        ],
+        "body": "{\n  \"startInfo\": {\n    \"ReleaseKey\": \"{{secrets.UIPATH_RELEASE_KEY}}\",\n    \"Strategy\": \"ModernJobsCount\",\n    \"JobsCount\": 1,\n    \"InputArguments\": \"{\\\"JiraIssueKey\\\":\\\"{{issue.key}}\\\",\\\"TestSuite\\\":\\\"{{issue.fields.summary}}\\\",\\\"JiraToken\\\":\\\"{{secrets.JIRA_API_TOKEN}}\\\"}\"\n  }\n}",
+        "customConnectionTimeouts": false
+      }
+    },
+    {
+      "id": "action-add-comment",
+      "component": "ACTION",
+      "schemaVersion": 1,
+      "type": "jira.issue.comment",
+      "value": {
+        "comment": "🚀 *Test Automation Triggered*\n\nUiPath job has been started for this issue.\n\n*Test Suite:* {{issue.fields.summary}}\n*Triggered at:* {{now}}\n\nResults will be posted automatically when tests complete."
+      }
+    }
+  ],
+  "tags": [
+    {
+      "id": "automation",
+      "name": "automation"
+    },
+    {
+      "id": "testing",
+      "name": "testing"
+    }
+  ],
+  "ruleScope": {
+    "resources": [
+      "project:KAN"
+    ]
+  },
+  "writeAccessType": "PROJECT_ADMIN"
+}
